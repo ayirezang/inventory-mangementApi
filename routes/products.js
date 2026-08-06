@@ -1,21 +1,20 @@
 import express from "express";
-import Product from "../models/product.js";
+
 import {
-  createProduct,
-  deleteProduct,
+  getLowStockProducts,
   getAllProducts,
+  updateProduct,
+  createProduct,
   getProductById,
-  lowStockAlert,
-  updateProductById,
 } from "../controllers/products.js";
 const router = express.Router();
 
 //create a product
-router.post("/products", createProduct);
+router.get("/low-stock", getLowStockProducts);
 router.get("/products", getAllProducts);
+router.post("/products", createProduct);
+router.patch("/products/:id/stock", updateProduct);
+
 router.get("/products/:id", getProductById);
-router.put("/products/:id", updateProductById);
-router.delete("/products/:id", deleteProduct);
-router.get("/low-stock", lowStockAlert);
 
 export default router;

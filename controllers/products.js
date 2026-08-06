@@ -1,4 +1,3 @@
-import { trusted } from "mongoose";
 import Product from "../models/product.js";
 
 //create a new product
@@ -44,7 +43,7 @@ export const getProductById = async (req, res) => {
   }
 };
 
-// Update a product by ID
+// Update a product
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -55,12 +54,12 @@ export const updateProduct = async (req, res) => {
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
       { $inc: { quantity: amount } },
-      { new: true, runVlidators: true },
+      { new: true, runValidators: true },
     );
     if (!updatedProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
-    return res.stauts(200).json(updatedProduct);
+    return res.status(200).json(updatedProduct);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -69,17 +68,16 @@ export const updateProduct = async (req, res) => {
 //low stock alert
 export const getLowStockProducts = async (req, res) => {
   try {
-    {
-      /*check if threshold has been passed or use 10*/
-    }
+    //check if threshold has been passed or use 10*/
+
     const threshold = Number(req.query.threshold) || 10;
-    {
-      /**query mongobd $lt */
-    }
+
+    //query mongobd $lt
+
     const lowStockProductss = await Product.find({
       quantity: { $lt: threshold },
     });
-    return res.status(200).json("low stock products").json(lowStockProductss);
+    return res.status(200).json(lowStockProducts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -4,11 +4,13 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import productRoutes from "./routes/products.js";
 dotenv.config();
+
 const server = express();
-server.use(cors());     
-//middlewara
-express.json();
-  
+//middleware
+server.use(cors());
+
+server.use(express.json());
+//routes
 server.use(productRoutes);
 mongoose
   .connect(process.env.MONGO_DB)
